@@ -19,7 +19,6 @@ npm run build
 ### Author
 
 Desko Sekulovic
-[Traversy Media](http://www.traversymedia.com)
 
 ### Version
 
