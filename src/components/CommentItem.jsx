@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
-import { fetchItems, arrayToObject } from '../utilities/helper.jsx';
+import { fetchItems, arrayToObject } from '../utilities/helper';
 import StyledComment, { TextToggle, ToggleMeta } from '../styles/CommentItem.jsx';
 
 import makeComponentTrashable from 'trashable-react';
@@ -22,24 +22,11 @@ class CommentItem extends Component {
 
         kids && this.props.registerPromise(fetchItems(kids))
             .then(items =>{
-                let newData=arrayToObject(items, 'id');
+                const newData=arrayToObject(items, 'id');
                 this.setState({
                     data: Object.assign({},newData)
                 });
             });
-        this.timer=setInterval(()=>{
-            kids && this.props.registerPromise(fetchItems(kids))
-                .then(items =>{
-                    let newData=arrayToObject(items, 'id');
-                    this.setState({
-                        data: Object.assign({},newData)
-                    });
-                });
-        }, 60000);
-    }
-
-    componentWillUnmount(){
-        clearInterval(this.timer);
     }
 
     toggleVisible(id){
@@ -53,13 +40,14 @@ class CommentItem extends Component {
 
     render(){
         const { data } = this.state;
-        if(this.props.kids===undefined){
+        const { kids, registerPromise } = this.props;
+        if(kids===undefined){
             return <div style={{'paddingLeft': '30px',
                 'paddingBottom': '30px'}}>No comments!</div>;
         }
         return(
-            <div>
-                {this.props.kids.map(kid=>{
+            <React.Fragment>
+                {kids.map(kid=>{
                     if(data[kid]===undefined) return null;
                     if(data[kid].deleted) return null;
                     if(data[kid].dead) return null;
@@ -75,13 +63,13 @@ class CommentItem extends Component {
                                 <div className='text' dangerouslySetInnerHTML={{ __html: text }} />
                                 <p>reply</p>
                                 {
-                                    kids && <CommentItem registerPromise={this.props.registerPromise} kids={kids} />
+                                    kids && <CommentItem registerPromise={registerPromise} kids={kids} />
                                 }
                             </TextToggle>
                         </StyledComment>
                     );
                 })}
-            </div>
+            </React.Fragment>
         );
     }
 }

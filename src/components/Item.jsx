@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
-import { get_host } from '../utilities/helper.jsx';
+import { get_host } from '../utilities/helper';
 import StyledItem, { Title, Data } from '../styles/Item.jsx';
 import PropTypes from 'prop-types';
 

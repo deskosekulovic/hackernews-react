@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CommentItem from './CommentItem.jsx';
 import CommentMeta from './CommentMeta.jsx';
-import AnotherMain from './AnotherMain.jsx';
+import FetchData from './FetchData.jsx';
 import StyledComments from '../styles/Comments.jsx';
 
 const Comments = props => {
     return(
-        <AnotherMain {...props} name={'item'}>
+        <FetchData {...props} name={'item'}>
             {comment=> {
                 if(comment.data===null) return null;
                 return (
@@ -18,7 +18,7 @@ const Comments = props => {
                 );
             }
             }
-        </AnotherMain>
+        </FetchData>
     );
 };
 

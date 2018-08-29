@@ -16,7 +16,7 @@ export const db = app.database().ref('v0');
 
 
 export function setTitle(home, page){
-    home!==undefined ?
+    home!=='/' ?
         document.title = 'Hacker News - ' + page :
         document.title = 'Hacker News';
 }
@@ -52,18 +52,26 @@ export function fetchingIds(name) {
             resolve(ids);
         });
     });
+    
+    // const URL = `https://hacker-news.firebaseio.com/v0/${name}.json`;
+    //
+    // return fetch(URL).then(response => {
+    //     return response.json();
+    // }).then(ids=>{
+    //     saveIds(name,ids);
+    //     return ids;
+    // });
 }
 
 let cacheItems = JSON.parse(sessionStorage.getItem('cacheItems')) || {};
 
 export const saveItems = (item) => {
-    // cacheItems = {...cacheItems, ...item};
     item.map(i=> cacheItems[i.id] = i);
-    // cacheItems = {...cacheItems, [item.id]: item};
     sessionStorage.setItem('cacheItems', JSON.stringify(cacheItems));
 };
 
 export function fetchItem(type, id) {
+    // let url = `https://hacker-news.firebaseio.com/v0/${type}/${id}.json`;
     let isOld = false;
     const now = Date.now();
     if(cacheItems[id] && Math.round((now - cacheItems[id].timeStamp)/1000) > 59){
@@ -73,6 +81,9 @@ export function fetchItem(type, id) {
     if(cacheItems[id] && !isOld){
         return Promise.resolve(cacheItems[id]);
     }else{
+        // return fetch(url).then(response => response.json()).then(item=>{
+        //     return Object.assign({}, item, {visible: true, timeStamp: Date.now()});
+        // });
         return new Promise(resolve=>{
             db.child(`${type}/${id}`).once('value').then(snapshot => {
                 let item = Object.assign({}, snapshot.val(), {visible: true, timeStamp: Date.now()});
@@ -88,4 +99,20 @@ export function fetchItems(ids) {
 
 export function fetchItemsFromTypes(name, page) {
     return fetchingIds(name).then(ids=>fetchItems(ids.slice(30*(page-1),30*page)));
+}
+
+export function watchList (type, cb) {
+    let first = true;
+    const ref = db.child(type);
+    const handler = snapshot => {
+        if (first) {
+            first = false;
+        } else {
+            cb(snapshot.val());
+        }
+    };
+    ref.on('value', handler);
+    return () => {
+        ref.off('value', handler);
+    };
 }

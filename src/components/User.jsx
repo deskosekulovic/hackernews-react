@@ -1,12 +1,11 @@
 import React from 'react';
 import TimeAgo from 'react-timeago';
-import AnotherMain from './AnotherMain.jsx';
-// import Spinner from './Spinner.jsx';
+import FetchData from './FetchData.jsx';
 import StyledUser, { UserItem } from '../styles/User.jsx';
 
 const User = props => {
     return(
-        <AnotherMain {...props} name={'user'}>
+        <FetchData {...props} name={'user'}>
             {user=> {
                 if(user.data===null) return null;
                 return(
@@ -20,7 +19,7 @@ const User = props => {
                     )
                 );
             }}
-        </AnotherMain>
+        </FetchData>
     );
 };
 

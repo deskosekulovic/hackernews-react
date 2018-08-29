@@ -2,21 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
-import { get_host } from '../utilities/helper.jsx';
+import { get_host } from '../utilities/helper';
 import StyledCommentMeta, { Title } from '../styles/CommentMeta.jsx';
 
 const CommentMeta = ({ data }) =>(
     <StyledCommentMeta key={data.id}>
-        <div>
-            {
-                data.url ? <Title>
-                    <Link to={data.url} target="_blank" rel="noopener"><b>{data.title}</b></Link> <span>({get_host(data.url)})</span>
+        {
+            data.url ?
+                <Title>
+                    <Link
+                        to={data.url}
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        <b>{data.title}</b>
+                    </Link> <span>({get_host(data.url)})</span>
                 </Title> :
-                    <Title>
-                        <Link to={`/item/${data.id}`}>{data.title}</Link>
-                    </Title>
-            }
-        </div>
+                <Title>
+                    <Link to={`/item/${data.id}`}>{data.title}</Link>
+                </Title>
+        }
+
         {
             <div>
                 <span>{data.score} points</span>{'  '}
