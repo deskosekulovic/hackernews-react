@@ -1,15 +1,4 @@
-import styled, { keyframes } from 'styled-components';
-
-const fadeIn = keyframes`
-	from {
-    opacity: 0;
-    transform: translateX(50px);
-	}
-	to {
-    opacity: 1;
-    transform: translateX(0px);
-	}
-`;
+import styled from 'styled-components';
 
 export const TextToggle = styled.div`
   display: ${(props) => props.visible ? null : 'none'};
@@ -24,16 +13,3 @@ export const ToggleMeta = styled.span`
 		cursor: pointer;
 		}
 `;
-
-const StyledComment = styled.div`
-  padding-left: 30px;
-  padding-right: 10px;
-	padding-bottom: 10px;
-
-  animation-name: ${fadeIn};
-  animation-duration: 500ms;
-  animation-timing-function: ease;
-
-`;
-
-export default StyledComment;
