@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Title = styled.div`
-    font-size: 18px;
+    font-size: ${(props) => props.theme.titleFontSize};
     @media (max-width: 800px) {
 			font-size: 16px;
 		}
@@ -9,19 +9,18 @@ export const Title = styled.div`
 			font-size: 14px;
 		}
     a {
-      color: #000;
+      color: ${(props) => props.theme.primaryColor};
     }
 `;
 
 export const Data = styled.div`
     a {
-      color: #666;
+      color: ${(props) => props.theme.linkColor};
     }
 `;
 
 const StyledItem = styled.li`
   padding: 10px;
-  color: #666;
   a {
       text-decoration: none;
       &:hover {

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 import { fetchItems, arrayToObject } from '../utilities/helper';
-import StyledComment, { TextToggle, ToggleMeta } from '../styles/CommentItem.jsx';
+import ComponentAnimation from '../styles/ComponentAnimation.jsx';
+import { TextToggle, ToggleMeta } from '../styles/CommentItem.jsx';
 
 import makeComponentTrashable from 'trashable-react';
 
@@ -42,8 +43,7 @@ class CommentItem extends Component {
         const { data } = this.state;
         const { kids, registerPromise } = this.props;
         if(kids===undefined){
-            return <div style={{'paddingLeft': '30px',
-                'paddingBottom': '30px'}}>No comments!</div>;
+            return <ComponentAnimation>No comments!</ComponentAnimation>;
         }
         return(
             <React.Fragment>
@@ -54,7 +54,7 @@ class CommentItem extends Component {
                     if(!data[kid].id) return null;
                     const { by, time, text, id, kids, visible } = data[kid];
                     return(
-                        <StyledComment key={id}>
+                        <ComponentAnimation key={id}>
                             <div>
                                 <ToggleMeta onClick={()=>this.toggleVisible(id)} >{visible ? '[-]' : '[+]'} </ToggleMeta><Link to={`/user/${by}`} ><b>{by}</b></Link>{'  '}
                                 <span><TimeAgo date={new Date(time*1000)} /></span>
@@ -66,7 +66,7 @@ class CommentItem extends Component {
                                     kids && <CommentItem registerPromise={registerPromise} kids={kids} />
                                 }
                             </TextToggle>
-                        </StyledComment>
+                        </ComponentAnimation>
                     );
                 })}
             </React.Fragment>

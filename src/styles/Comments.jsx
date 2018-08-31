@@ -6,11 +6,10 @@ const StyledComments = styled.div`
     text-decoration: none;
     color: inherit;
     &:hover {
-    cursor: pointer;
-    text-decoration: underline;
+      cursor: pointer;
+      text-decoration: underline;
+    }
   }
-  }
-
 `;
 
 export default StyledComments;

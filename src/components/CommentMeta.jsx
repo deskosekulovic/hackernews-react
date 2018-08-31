@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 import { get_host } from '../utilities/helper';
-import StyledCommentMeta, { Title } from '../styles/CommentMeta.jsx';
+import ComponentAnimation from '../styles/ComponentAnimation.jsx';
+import { Title } from '../styles/CommentMeta.jsx';
 
 const CommentMeta = ({ data }) =>(
-    <StyledCommentMeta key={data.id}>
+    <ComponentAnimation key={data.id}>
         {
             data.url ?
                 <Title>
@@ -32,7 +33,7 @@ const CommentMeta = ({ data }) =>(
                 {data.text && <p dangerouslySetInnerHTML={{ __html: data.text }} />}
             </div>
         }
-    </StyledCommentMeta>
+    </ComponentAnimation>
 );
 
 CommentMeta.propTypes = {
