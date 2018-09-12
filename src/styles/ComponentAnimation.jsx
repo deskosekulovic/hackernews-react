@@ -12,9 +12,9 @@ const slideIn = keyframes`
 `;
 
 const ComponentAnimation = styled.div`
-  padding-left: 30px;
-  padding-right: 10px;
-  padding-bottom: 30px;
+  margin-left: 30px;
+  margin-right: 10px;
+  margin-bottom: 30px;
 
   animation-name: ${slideIn};
   animation-duration: 500ms;

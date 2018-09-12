@@ -11,6 +11,8 @@ export const theme = {
 };
 
 const StyledApp = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 90%;
   max-width: 1280px;
   margin: 0px auto;
@@ -19,7 +21,6 @@ const StyledApp = styled.div`
   font-size: ${(props) => props.theme.fontSize};
   @media (max-width:800px) {
     width: 100%;
-    font-size: 12px;
   }
 `;
 
