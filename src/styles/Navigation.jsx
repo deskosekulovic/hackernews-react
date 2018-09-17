@@ -3,7 +3,8 @@ import styled from 'styled-components';
 const Header = styled.div`
     color: ${(props) => props.theme.primaryColor};
     background-color: ${(props) => props.theme.backgrounHeader};
-    padding: 0.5%;
+    font-size: 16px;
+    padding: 1%;
     a{
       text-decoration: none;
       color: ${(props) => props.theme.primaryColor};
@@ -11,10 +12,9 @@ const Header = styled.div`
     .selected{
       color: white;
     }
-    @media (max-width: 800px) {
-			font-size: 16px;
-      padding: 1%;
-		}
+    @media (min-width:960px) {
+      padding: 0.5%;
+    }
 `;
 
 export default Header;

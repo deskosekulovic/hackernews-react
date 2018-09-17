@@ -13,14 +13,13 @@ export const theme = {
 const StyledApp = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
-  max-width: 1280px;
   margin: 0px auto;
   color: ${(props) => props.theme.primaryColor};
   background-color: ${(props) => props.theme.backgroundColor};
   font-size: ${(props) => props.theme.fontSize};
-  @media (max-width:800px) {
-    width: 100%;
+  @media (min-width:960px) {
+    width: 90%;
+    max-width: 1280px;
   }
 `;
 
