@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 import { get_host } from '../utilities/helper';
 import ComponentAnimation from '../styles/ComponentAnimation.jsx';
-import { Title } from '../styles/CommentMeta.jsx';
+import { Title } from '../styles/Item.jsx';
 
 const CommentMeta = ({ data }) =>(
     <ComponentAnimation key={data.id}>
@@ -25,7 +25,7 @@ const CommentMeta = ({ data }) =>(
         }
 
         {
-            <div>
+            <div style={{'color': '#666'}}>
                 <span>{data.score} points</span>{'  '}
                 <span>by <Link to={`/user/${data.by}`} ><b>{data.by}</b></Link></span>{'  '}
                 <span><TimeAgo date={new Date(data.time*1000)} /></span>{' | '}

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
-import { fetchItems, arrayToObject } from '../utilities/helper';
+import { arrayToObject } from '../utilities/helper';
+import { fetchItems } from '../api';
 import ComponentAnimation from '../styles/ComponentAnimation.jsx';
 import { TextToggle, ToggleMeta } from '../styles/CommentItem.jsx';
 
@@ -18,28 +19,27 @@ class CommentItem extends Component {
         this.toggleVisible = this.toggleVisible.bind(this);
     }
 
-    componentDidMount(){
-        const kids = this.props.kids;
+    componentDidMount() {
+        const { kids, registerPromise } = this.props;
 
-        kids && this.props.registerPromise(fetchItems(kids))
-            .then(items =>{
-                const newData=arrayToObject(items, 'id');
+        kids && registerPromise(fetchItems(kids))
+            .then(items => {
                 this.setState({
-                    data: Object.assign({},newData)
+                    data: Object.assign({}, arrayToObject(items, 'id'))
                 });
             });
     }
 
-    toggleVisible(id){
-        let el = this.state.data[id];
+    toggleVisible(id) {
+        const { data } = this.state;
         this.setState({
             data: {
-                ...this.state.data,
-                [id]: {...el, visible: !el.visible}}
+                ...data,
+                [id]: {...data[id], visible: !data[id].visible}}
         });
     }
 
-    render(){
+    render() {
         const { data } = this.state;
         const { kids, registerPromise } = this.props;
         if(kids===undefined){
@@ -56,14 +56,29 @@ class CommentItem extends Component {
                     return(
                         <ComponentAnimation key={id}>
                             <div>
-                                <ToggleMeta onClick={()=>this.toggleVisible(id)} >{visible ? '[-]' : '[+]'} </ToggleMeta><Link to={`/user/${by}`} ><b>{by}</b></Link>{'  '}
-                                <span><TimeAgo date={new Date(time*1000)} /></span>
+                                <ToggleMeta
+                                    onClick={() => this.toggleVisible(id)}
+                                >
+                                    {visible ? ' [-] ' : ' [+] '}
+                                </ToggleMeta>
+                                <Link to={`/user/${by}`}>
+                                    <b>{by}</b>
+                                </Link>{'  '}
+                                <span>
+                                    <TimeAgo date={new Date(time*1000)} />
+                                </span>
                             </div>
                             <TextToggle visible={visible}>
-                                <div className='text' dangerouslySetInnerHTML={{ __html: text }} />
+                                <div
+                                    className='text'
+                                    dangerouslySetInnerHTML={{ __html: text }}
+                                />
                                 <p>reply</p>
                                 {
-                                    kids && <CommentItem registerPromise={registerPromise} kids={kids} />
+                                    kids && <CommentItem
+                                        registerPromise={registerPromise}
+                                        kids={kids}
+                                    />
                                 }
                             </TextToggle>
                         </ComponentAnimation>

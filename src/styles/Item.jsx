@@ -5,10 +5,16 @@ export const Title = styled.div`
     a {
       color: ${(props) => props.theme.primaryColor};
     }
+    span {
+      color: ${(props) => props.theme.linkColor};
+    }
 `;
 
 export const Data = styled.div`
     a {
+      color: ${(props) => props.theme.linkColor};
+    }
+    span {
       color: ${(props) => props.theme.linkColor};
     }
 `;

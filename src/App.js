@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider, injectGlobal } from 'styled-components';
-import StyledApp, { theme } from './styles/App.jsx';
+import StyledApp from './styles/App.jsx';
+import { theme } from './styles';
 import { TopStories, NewStories, ShowStories, AskStories, JobsStories } from './StoriesBuilder';
 import Navigation from './components/Navigation.jsx';
 import User from './components/User.jsx';
@@ -20,9 +21,24 @@ const App = () => {
                     <Route path='/show/:ids*' component={ShowStories} />
                     <Route path='/ask/:ids*' component={AskStories} />
                     <Route path='/jobs/:ids*' component={JobsStories} />
-                    <Route path='/user/:ids' render={props=><User {...props} name={'user'} title={'user'} />} />
-                    <Route path='/item/:ids' render={props=><Comments {...props} name={'item'} title={'comment'} />} />
-
+                    <Route
+                        path='/user/:ids'
+                        render={props=>
+                            <User
+                                {...props}
+                                name={'user'}
+                                title={'user'}
+                            />}
+                    />
+                    <Route
+                        path='/item/:ids'
+                        render={props=>
+                            <Comments
+                                {...props}
+                                name={'item'}
+                                title={'comment'}
+                            />}
+                    />
                     <Route render={() => (<h1>Not found</h1>)}/>
                 </Switch>
             </StyledApp>

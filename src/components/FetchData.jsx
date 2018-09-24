@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { fetchItem, setTitle } from '../utilities/helper';
+import { setTitle } from '../utilities/helper';
+import { fetchItem } from '../api';
 import makeComponentTrashable from 'trashable-react';
 
 class FetchData extends Component {
@@ -12,11 +13,11 @@ class FetchData extends Component {
     }
 
     componentDidMount(){
-        const { match, title, name } = this.props;
+        const { match, title, name, registerPromise } = this.props;
         const page = match.params.ids;
         setTitle(match.url, title);
         window.scrollTo(0, 0);
-        this.props.registerPromise(fetchItem(name, page))
+        registerPromise(fetchItem(name, page))
             .then(item => {
                 this.setState({data: item, loading: false});
             });

@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import StyledPaginator from '../styles/Paginator.jsx';
 
-const Paginator = ({ page, basePath, name }) => {
-    const numberOfItems = JSON.parse(sessionStorage.getItem('cacheIds'))[name].length;
-    const totalPages = Math.ceil(numberOfItems/30);
-    if(numberOfItems <= 30 || page > totalPages) return null;
+const Paginator = ({ page, basePath, numberOfItems, itemsPerPage }) => {
+    const totalPages = Math.ceil(numberOfItems/itemsPerPage);
+    if(numberOfItems <= itemsPerPage || page > totalPages) return null;
     return(
         <StyledPaginator>
             {page!==1 &&
               <span>
                   <Link
                       to={`/${basePath}/${page-1}`}
-                      onClick={()=>{return window.scrollTo(0, 0);}}
+                      onClick={()=> window.scrollTo(0, 0)}
                   >
                       <b>Prev</b>
                   </Link>
@@ -24,7 +23,7 @@ const Paginator = ({ page, basePath, name }) => {
               <span>
                   <Link
                       to={`/${basePath}/${page+1}`}
-                      onClick={()=>{return window.scrollTo(0, 0);}}
+                      onClick={()=> window.scrollTo(0, 0)}
                   >
                       <b>More</b>
                   </Link>
@@ -35,9 +34,10 @@ const Paginator = ({ page, basePath, name }) => {
 };
 
 Paginator.propTypes = {
-    name: PropTypes.string.isRequired,
+    numberOfItems: PropTypes.number.isRequired,
     page: PropTypes.number.isRequired,
-    basePath: PropTypes.string.isRequired
+    basePath: PropTypes.string.isRequired,
+    itemsPerPage: PropTypes.number.isRequired
 };
 
 export default Paginator;
