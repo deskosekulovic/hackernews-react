@@ -1,13 +1,14 @@
 # React Webpack Starter
+
 > This is a boilerplate for React 16 & Webpack 4. It includes webpack-dev-server and a build script
 
 ## Quick Start
 
-``` bash
+```bash
 # Install dependencies
 npm install
 
-# Serve on localhost:3000
+# Serve on localhost:8080
 npm start
 
 # Build for production

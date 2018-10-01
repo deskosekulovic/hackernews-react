@@ -2,38 +2,38 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Delay extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            waiting: true
-        };
+    this.state = {
+      waiting: true
+    };
+  }
+
+  componentDidMount() {
+    this.timer = setTimeout(() => {
+      this.setState({
+        waiting: false
+      });
+    }, this.props.wait);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  render() {
+    if (!this.state.waiting) {
+      return this.props.children;
     }
 
-    componentDidMount() {
-        this.timer = setTimeout(() => {
-            this.setState({
-                waiting: false
-            });
-        }, this.props.wait);
-    }
-
-    componentWillUnmount() {
-        clearTimeout(this.timer);
-    }
-
-    render() {
-        if (!this.state.waiting) {
-            return this.props.children;
-        }
-
-        return null;
-    }
+    return null;
+  }
 }
 
 Delay.propTypes = {
-    children: PropTypes.node,
-    wait: PropTypes.number
+  children: PropTypes.node,
+  wait: PropTypes.number
 };
 
 export default Delay;

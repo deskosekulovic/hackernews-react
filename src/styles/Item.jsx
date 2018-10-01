@@ -1,29 +1,21 @@
 import styled from 'styled-components';
 
-export const Title = styled.div`
-    font-size: ${(props) => props.theme.titleFontSize};
-    a {
-      color: ${(props) => props.theme.primaryColor};
-    }
-    span {
-      color: ${(props) => props.theme.linkColor};
-    }
-`;
-
 export const Data = styled.div`
-    a {
-      color: ${(props) => props.theme.linkColor};
-    }
-    span {
-      color: ${(props) => props.theme.linkColor};
-    }
+  font-size: ${props => props.title && props.theme.titleFontSize};
+  a {
+    color: ${props =>
+    props.title ? props.theme.primaryColor : props.theme.linkColor};
+  }
+  span {
+    color: ${props => props.theme.linkColor};
+  }
 `;
 
 const StyledItem = styled.li`
   padding: 10px;
   a {
-      text-decoration: none;
-      &:hover {
+    text-decoration: none;
+    &:hover {
       cursor: pointer;
       text-decoration: underline;
     }
