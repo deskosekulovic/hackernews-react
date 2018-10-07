@@ -42,40 +42,36 @@ class Main extends Component {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { match, name, registerPromise } = this.props;
+  componentDidUpdate(prevProps) {
+    const {
+      match,
+      name,
+      registerPromise
+    } = this.props;
     const page = parseInt(match.params.ids, 10) || 1;
-    const nextPage = parseInt(nextProps.match.params.ids, 10) || 1;
+    const prevPage = parseInt(prevProps.match.params.ids, 10) || 1;
     const { itemsPerPage } = this.state;
 
-    if (page !== nextPage) {
+    if (page !== prevPage) {
       this.unwatch();
       window.scrollTo(0, 0);
-      registerPromise(fetchItemsFromTypes(name, nextPage, itemsPerPage)).then(
+      registerPromise(fetchItemsFromTypes(name, page, itemsPerPage)).then(
         items => this.fetchData(items)
       );
 
+      // cache data for next and previous page if needed
+      fetchItemsFromTypes(name, page + 1, itemsPerPage).then(items =>
+        store.saveItems(items)
+      );
+      page !== 1 &&
+        fetchItemsFromTypes(name, page - 1).then(items => store.saveItems(items));
+
       this.unwatch = watchList(name, ids =>
         fetchItems(
-          ids.slice(itemsPerPage * (nextPage - 1), itemsPerPage * nextPage)
+          ids.slice(itemsPerPage * (page - 1), itemsPerPage * page)
         ).then(items => this.fetchData(items))
       );
     }
-  }
-
-  componentDidUpdate() {
-    const {
-      match: { params },
-      name
-    } = this.props;
-    const page = parseInt(params.ids, 10) || 1;
-    const { itemsPerPage } = this.state;
-    // cache data for next and previous page if needed
-    fetchItemsFromTypes(name, page + 1, itemsPerPage).then(items =>
-      store.saveItems(items)
-    );
-    page !== 1 &&
-      fetchItemsFromTypes(name, page - 1).then(items => store.saveItems(items));
   }
 
   componentWillUnmount() {
