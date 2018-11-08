@@ -6,6 +6,7 @@ import { arrayToObject } from '../utilities/helper';
 import { fetchItems } from '../api';
 import ComponentAnimation from '../styles/ComponentAnimation.jsx';
 import { TextToggle, ToggleMeta } from '../styles/CommentItem.jsx';
+import Spinner from './Spinner.jsx';
 
 import makeComponentTrashable from 'trashable-react';
 
@@ -14,7 +15,8 @@ class CommentItem extends Component {
     super(props);
 
     this.state = {
-      data: {}
+      data: {},
+      loading: true
     };
     this.toggleVisible = this.toggleVisible.bind(this);
   }
@@ -25,7 +27,8 @@ class CommentItem extends Component {
     kids &&
       registerPromise(fetchItems(kids)).then(items => {
         this.setState({
-          data: Object.assign({}, arrayToObject(items, 'id'))
+          data: Object.assign({}, arrayToObject(items, 'id')),
+          loading: false
         });
       });
   }
@@ -41,12 +44,14 @@ class CommentItem extends Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { data, loading } = this.state;
     const { kids, registerPromise } = this.props;
     if (kids === undefined) {
       return <ComponentAnimation>No comments!</ComponentAnimation>;
     }
-    return (
+    return loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         {kids.map(kid => {
           if (data[kid] === undefined) return null;

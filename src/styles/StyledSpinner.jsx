@@ -9,7 +9,8 @@ to {
 const StyledSpinner = styled.div`
   box-sizing: border-box;
   position: absolute;
-  top: 50%;
+  top: ${props => (props.bottom ? '0' : '50%')};
+  /* top: 50%; */
   left: 50%;
   width: 60px;
   height: 60px;

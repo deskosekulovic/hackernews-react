@@ -6,7 +6,6 @@ import Spinner from './Spinner.jsx';
 import { setTitle } from '../utilities/helper';
 import { store } from '../utilities/store';
 import { fetchItemsFromTypes, watchList, fetchItems } from '../api';
-import Delay from './DelayComponent.jsx';
 import makeComponentTrashable from 'trashable-react';
 
 class Main extends Component {
@@ -43,21 +42,17 @@ class Main extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      match,
-      name,
-      registerPromise
-    } = this.props;
+    const { match, name, registerPromise } = this.props;
     const page = parseInt(match.params.ids, 10) || 1;
     const prevPage = parseInt(prevProps.match.params.ids, 10) || 1;
     const { itemsPerPage } = this.state;
 
     // cache data for next and previous page if needed
-      fetchItemsFromTypes(name, page + 1, itemsPerPage).then(items =>
-        store.saveItems(items)
-      );
-      page !== 1 &&
-        fetchItemsFromTypes(name, page - 1).then(items => store.saveItems(items));
+    fetchItemsFromTypes(name, page + 1, itemsPerPage).then(items =>
+      store.saveItems(items)
+    );
+    page !== 1 &&
+      fetchItemsFromTypes(name, page - 1).then(items => store.saveItems(items));
 
     if (page !== prevPage) {
       this.unwatch();
@@ -65,8 +60,6 @@ class Main extends Component {
       registerPromise(fetchItemsFromTypes(name, page, itemsPerPage)).then(
         items => this.fetchData(items)
       );
-
-      
 
       this.unwatch = watchList(name, ids =>
         fetchItems(
@@ -102,9 +95,7 @@ class Main extends Component {
     return (
       <main>
         {loading ? (
-          <Delay wait={300}>
-            <Spinner />
-          </Delay>
+          <Spinner />
         ) : (
           <React.Fragment>
             <ListItems page={page} data={data} itemsPerPage={itemsPerPage} />
