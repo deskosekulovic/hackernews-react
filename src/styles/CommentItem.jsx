@@ -5,7 +5,6 @@ export const TextToggle = styled.div`
   padding-top: 10px;
   .text a {
     text-decoration: underline;
-	overflow-wrap: break-word;
   }
 `;
 
