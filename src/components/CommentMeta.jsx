@@ -11,7 +11,7 @@ const CommentMeta = ({ data }) => (
     {data.url ? (
       <Data title="title">
         <a href={data.url} target="_blank" rel="noopener noreferrer">
-          <b>{data.title}</b>
+          {data.title}
         </a>
         <span> ({get_host(data.url)}) </span>
       </Data>
