@@ -10,9 +10,9 @@ const CommentMeta = ({ data }) => (
   <ComponentAnimation key={data.id}>
     {data.url ? (
       <Data title="title">
-        <Link to={data.url} target="_blank" rel="noopener">
+        <a href={data.url} target="_blank" rel="noopener noreferrer">
           <b>{data.title}</b>
-        </Link>
+        </a>
         <span> ({get_host(data.url)}) </span>
       </Data>
     ) : (

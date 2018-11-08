@@ -9,9 +9,9 @@ const Item = ({ item }) => (
   <StyledItem>
     {item.url ? (
       <Data title="title">
-        <Link to={item.url} target="_blank" rel="noopener">
+        <a href={item.url} target="_blank" rel="noopener noreferrer">
           {item.title}
-        </Link>
+        </a>
         <span> ({get_host(item.url)}) </span>
       </Data>
     ) : (

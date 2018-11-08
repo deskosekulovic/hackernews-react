@@ -52,6 +52,13 @@ class Main extends Component {
     const prevPage = parseInt(prevProps.match.params.ids, 10) || 1;
     const { itemsPerPage } = this.state;
 
+    // cache data for next and previous page if needed
+      fetchItemsFromTypes(name, page + 1, itemsPerPage).then(items =>
+        store.saveItems(items)
+      );
+      page !== 1 &&
+        fetchItemsFromTypes(name, page - 1).then(items => store.saveItems(items));
+
     if (page !== prevPage) {
       this.unwatch();
       window.scrollTo(0, 0);
@@ -59,12 +66,7 @@ class Main extends Component {
         items => this.fetchData(items)
       );
 
-      // cache data for next and previous page if needed
-      fetchItemsFromTypes(name, page + 1, itemsPerPage).then(items =>
-        store.saveItems(items)
-      );
-      page !== 1 &&
-        fetchItemsFromTypes(name, page - 1).then(items => store.saveItems(items));
+      
 
       this.unwatch = watchList(name, ids =>
         fetchItems(
