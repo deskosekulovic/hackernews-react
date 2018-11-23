@@ -1,6 +1,6 @@
-# React Webpack Starter
+## App Info
 
-> This is a boilerplate for React 16 & Webpack 4. It includes webpack-dev-server and a build script
+Hackernews clone with live update using firebase api. Session storage used for caching data
 
 ## Quick Start
 
@@ -14,8 +14,6 @@ npm start
 # Build for production
 npm run build
 ```
-
-## App Info
 
 ### Author
 
